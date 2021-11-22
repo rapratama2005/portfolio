@@ -41,12 +41,17 @@ public class SecretSanta //remember to change this
       
       for (int i = 1; i < input.size(); i++){
          
-         int j = 20;
+         int k = 0;
+         while (input.get(i).substring(k, k+1).equals("\t")==false){
+            k++;
+         }
+         k+=1;
+         int j = k;
          while (input.get(i).substring(j, j+1).equals("\t")==false){
             j++;
          }
-         names.add(input.get(i).substring(20,j));
-         names2.add(input.get(i).substring(20,j));
+         names.add(input.get(i).substring(k,j));
+         names2.add(input.get(i).substring(k,j));
          
       }
 
@@ -93,7 +98,7 @@ public class SecretSanta //remember to change this
          
 
       }
-
+      //input important information
       System.out.println("Input the date when the presents are due");
       String dueDate = systemIn.nextLine();
       System.out.println("Input the place where the presents are due");
@@ -130,7 +135,7 @@ public class SecretSanta //remember to change this
                curRow.add(" ");
             }
          }
-         System.out.printf("----------------------\nHi, %s!\nYou will be giving a present to %s!\nHere's some information to help you think about what to get for them.\n**REMEMBER**: keep the cost between $%.2f and $%.2f and deposit your present in %s by %s.\nHave fun!\n\n", names2.get(i), names.get(i), minVal, maxVal, duePlace, dueDate);
+         System.out.printf("----------------------\nHi, %s!\nYou will be giving a present to **%s**!\nHere's some information to help you think about what to get for them.\n**REMEMBER**: keep the cost between $%.2f and $%.2f and deposit your present in %s by %s.\nHave fun!\n\n", names2.get(i), names.get(i), minVal, maxVal, duePlace, dueDate);
          for (int j = 2; j < topRow.size(); j++){
             System.out.print("**");
             System.out.print(topRow.get(j));
