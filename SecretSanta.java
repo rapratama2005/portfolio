@@ -1,4 +1,4 @@
-// R. A. Pratama
+// R. A. Pratama  
 // Nov 21, 2021 @ 18:26
 
 // This program matches people for secret santa
@@ -144,6 +144,10 @@ public class SecretSanta //remember to change this
             System.out.println();
          }
          System.out.println("----------------------\n");
+         System.out.println("\nPrint \"y\" to continue to the next message.");
+         if (systemIn.nextLine()=="y"){
+            continue;
+         }
       }
       
 
