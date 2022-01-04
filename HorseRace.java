@@ -64,6 +64,11 @@ public class HorseRace {
             int randomAdd = statTable[i][randomStat];
             roundAdds[i] = randomAdd;
         }
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (Exception e){
+            System.out.println(e);
+        }
         return roundAdds;
     }
 
@@ -76,6 +81,7 @@ public class HorseRace {
         return newState;
     }
 
+    //Checks
     public static String victoryCheck(int[] newState, String[] names, int finishLineDistance){
         String lead = "No Winner Yet";
         int currentFurthest = 0;
@@ -101,8 +107,20 @@ public class HorseRace {
             for (int j = 0; j < (finishLineDistance - newState[i])/(finishLineDistance/20); j++){
                 System.out.print("-");
             }
-            System.out.printf("%5d/%5d", newState[i], finishLineDistance);
+            System.out.printf("|%5d/%5d", newState[i], finishLineDistance);
         }
+    }
+
+    public static void race(int[][] statTable, int numOfHorses, int numOfStats, String[] names, int finishLineDistance){
+        String winner = "N/A";
+        int[] currentState = new int[numOfHorses];
+        while (winner.equals("N/A")){
+            int[] roundAdds = round(statTable, numOfHorses, numOfStats);
+            currentState = roundState(numOfHorses, roundAdds, currentState);
+            displayRace(currentState, names, finishLineDistance);
+            winner = victoryCheck(currentState, names, finishLineDistance);
+        }
+        System.out.println(winner + " is our winner!");
     }
 
 
@@ -113,6 +131,7 @@ public class HorseRace {
         String[] statCategories = {"Speed", "Endurance", "Luck", "Strength", "Flexibility", "Plot Armor"};
         int numOfStats = statCategories.length;
         int numOfHorses = 5;
+        int finishLineDistance = 1000;
 
         List<String> adjList = Arrays.asList("Antsy", "Big", "Cool", "Dumb", "Even", "Fast", "Gorgeous", "Hideous", "Idiotic", "Jumpy", "Kwik", "Large");
         
@@ -135,6 +154,14 @@ public class HorseRace {
                 System.out.println(e);
             }
         }
+
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+        race(fullStatsTable, numOfHorses, numOfStats, names, finishLineDistance);
 
 
 
