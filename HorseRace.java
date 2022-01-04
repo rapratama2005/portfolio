@@ -3,6 +3,7 @@
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class HorseRace {
 
@@ -75,6 +76,35 @@ public class HorseRace {
         return newState;
     }
 
+    public static String victoryCheck(int[] newState, String[] names, int finishLineDistance){
+        String lead = "No Winner Yet";
+        int currentFurthest = 0;
+        for (int i = 0; i < newState.length; i++){
+            if (newState[i] > currentFurthest){
+                lead = names[i];
+            }
+        }
+        if (currentFurthest > finishLineDistance){
+            return lead;
+        } else {
+            return "N/A";
+        }
+    }
+
+    public static void displayRace(int[] newState, String[] names, int finishLineDistance){
+        for (int i = 0; i < newState.length; i++){
+            System.out.printf("\n%20s |", names[i]);
+            for (int j = 0; j < newState[i]/(finishLineDistance/20); j++){
+                System.out.print("-");
+            }
+            System.out.print("P");
+            for (int j = 0; j < (finishLineDistance - newState[i])/(finishLineDistance/20); j++){
+                System.out.print("-");
+            }
+            System.out.printf("%5d/%5d", newState[i], finishLineDistance);
+        }
+    }
+
 
 
 
@@ -99,6 +129,11 @@ public class HorseRace {
         displayHorses(names);
         for (int i = 0; i < names.length; i++){
             displayHorseStat(names, fullStatsTable, statCategories, i);
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (Exception e){
+                System.out.println(e);
+            }
         }
 
 
