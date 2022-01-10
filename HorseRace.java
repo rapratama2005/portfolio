@@ -1,6 +1,9 @@
 //R. A. Pratama
 //December 31, 2021 @ 09:46
 
+//Horse Race Game
+//Theoretically, I could replace the Horses with classes, but we didn't learn it at the time so eh, whatever
+
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -81,13 +84,14 @@ public class HorseRace {
         return newState;
     }
 
-    //Checks
+    //Checks for victory
     public static String victoryCheck(int[] newState, String[] names, int finishLineDistance){
         String lead = "No Winner Yet";
         int currentFurthest = 0;
         for (int i = 0; i < newState.length; i++){
             if (newState[i] > currentFurthest){
                 lead = names[i];
+                currentFurthest = newState[i];
             }
         }
         if (currentFurthest > finishLineDistance){
@@ -97,20 +101,25 @@ public class HorseRace {
         }
     }
 
+    //Displays the race
     public static void displayRace(int[] newState, String[] names, int finishLineDistance){
+        for (int i = 0; i < 20; i++){
+            System.out.println();
+        }
         for (int i = 0; i < newState.length; i++){
             System.out.printf("\n%20s |", names[i]);
-            for (int j = 0; j < newState[i]/(finishLineDistance/20); j++){
+            for (int j = 0; j < newState[i]/(finishLineDistance/50); j++){
                 System.out.print("-");
             }
             System.out.print("P");
-            for (int j = 0; j < (finishLineDistance - newState[i])/(finishLineDistance/20); j++){
+            for (int j = 0; j < (finishLineDistance - newState[i])/(finishLineDistance/50); j++){
                 System.out.print("-");
             }
             System.out.printf("|%5d/%5d", newState[i], finishLineDistance);
         }
     }
 
+    //main race function
     public static void race(int[][] statTable, int numOfHorses, int numOfStats, String[] names, int finishLineDistance){
         String winner = "N/A";
         int[] currentState = new int[numOfHorses];
@@ -120,7 +129,7 @@ public class HorseRace {
             displayRace(currentState, names, finishLineDistance);
             winner = victoryCheck(currentState, names, finishLineDistance);
         }
-        System.out.println(winner + " is our winner!");
+        System.out.println("\n\n" + winner + " is our winner!");
     }
 
 
@@ -128,10 +137,11 @@ public class HorseRace {
 
     public static void main(String[] args){
 
-        String[] statCategories = {"Speed", "Endurance", "Luck", "Strength", "Flexibility", "Plot Armor"};
+        //Initial Variables
+        String[] statCategories = {"Speed", "Endurance", "Luck", "Strength", "Flexibility", "Plot Armor", "Attractiveness", "Wealth"};
         int numOfStats = statCategories.length;
-        int numOfHorses = 5;
-        int finishLineDistance = 1000;
+        int numOfHorses = 10;
+        int finishLineDistance = 2000;
 
         List<String> adjList = Arrays.asList("Antsy", "Big", "Cool", "Dumb", "Even", "Fast", "Gorgeous", "Hideous", "Idiotic", "Jumpy", "Kwik", "Large");
         
@@ -142,6 +152,8 @@ public class HorseRace {
         
         ArrayList<String> properNouns = new ArrayList<>();
         properNouns.addAll(namesList);
+
+        //end intial variables
 
         String[] names = generateNames(numOfHorses, adjectives, properNouns);
         int[][] fullStatsTable = fullStatTable(numOfHorses, numOfStats);
